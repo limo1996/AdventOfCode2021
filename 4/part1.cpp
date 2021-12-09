@@ -1,14 +1,22 @@
 #include <iostream>
 #include <vector>
+#include <sstream>
+#include <iterator>
 
 using namespace std;
 
-bool loadBoard(vector<int*> &boards, vector<bool*> &marks) {
-  int board[25];
-  bool mark[25] = {false};
-  for (int i = 0 ; i < 25; i++) {
-    if (!cin >> board[i])
+bool loadBoard(vector<vector<int>> &boards, vector<vector<bool>> &marks) {
+  vector<int> board;
+  vector<bool> mark(25, false);
+  int i = 0;
+  string line;
+  getline(cin, line);
+  for (int i = 0; i < 25; i+=5) {
+    if (!getline(cin, line))
       return false;
+    istringstream is(line);
+    board.insert(board.end(), std::istream_iterator<int>(is),
+                              std::istream_iterator<int>() );
   }
   boards.push_back(board);
   marks.push_back(mark);
@@ -16,15 +24,17 @@ bool loadBoard(vector<int*> &boards, vector<bool*> &marks) {
 }
 
 vector<int> loadOrder() {
+  string s, in;
+  getline(cin, in);
+  istringstream ss(in);
   vector<int> order;
-  int i;
-  while (cin >> i) {
-    order.push_back(i);
+  while (getline(ss, s, ',')) {
+    order.push_back(std::stoi(s));
   }
   return order;
 }
 
-int solve(vector<int> &order, vector<int*> &boards, vector<bool*> &marks) {
+int solve(vector<int> &order, vector<vector<int>> &boards, vector<vector<bool>> &marks) {
   for (int i = 0; i < order.size(); i++) {
     int curr = order[i];
 
@@ -57,8 +67,8 @@ int solve(vector<int> &order, vector<int*> &boards, vector<bool*> &marks) {
 
 int main() {
   vector<int> order = loadOrder();
-  vector<int*> boards;
-  vector<bool*> marks;
+  vector<vector<int>> boards;
+  vector<vector<bool>> marks;
   while(loadBoard(boards, marks)) ;
 
   cout << solve(order, boards, marks) << endl;
