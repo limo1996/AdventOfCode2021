@@ -25,19 +25,11 @@ bool loadLine(vector<vector<int>> &lines, int& x1, int& y1) {
 
 
 int main() {
-  vector<vector<int>> lines;
   int x1 = 0, y1 = 0, result = 0;
+  vector<vector<int>> lines;
   while (loadLine(lines, x1, y1));
+  vector<vector<int>> board(++x1, vector<int>(++y1, 0));
 
-  /*for (int i = 0; i < lines.size(); i++) {
-    for (int j = 0; j < lines[i].size(); j++)
-      cout << lines[i][j] << " ";
-    cout << endl;
-  }
-
-  cout << x1 << " " << y1 << endl;*/
-  x1++; y1++;
-  vector<vector<int>> board(x1, vector<int>(y1, 0));
   for (auto line : lines) {
     if (line[0] == line[2]) {
       for (int i = min(line[1], line[3]); i <= max(line[1], line[3]); i++)
