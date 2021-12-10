@@ -31,12 +31,6 @@ int main() {
   while (loadLine(lines, x1, y1));
   vector<vector<int>> board(++x1, vector<int>(++y1, 0));
 
-  for (int i = 0; i < lines.size(); i++) {
-    for (int j = 0; j < lines[i].size(); j++)
-      cout << lines[i][j] << " ";
-    cout << endl;
-  }
-
   for (auto line : lines) {
     if (line[0] == line[2]) {
       for (int i = min(line[1], line[3]); i <= max(line[1], line[3]); i++)
