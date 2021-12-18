@@ -38,8 +38,9 @@ void flash(vector<vector<int>> &grid, vector<vector<bool>> &flashed, int X, int 
 int main() {
   auto grid = loadGrid();
   int X = grid.size(), Y = grid[0].size();
-  int flashes = 0;
-  for (int k = 0; k < 100; k++) {
+  int step=0;
+  while (true) {
+    step++;
     vector<vector<bool>> flashed(X, vector<bool>(Y, false));
     for (int i = 0; i < X; i++) {
       for (int j = 0; j < Y; j++) {
@@ -50,16 +51,19 @@ int main() {
         }
       }
     }
+    bool allFlashed = true;
     for (int i = 0; i < X; i++) {
       for (int j = 0; j < Y; j++) {
+        allFlashed = allFlashed && flashed[i][j];
         if (grid[i][j] > 9) {
-          flashes++;
           grid[i][j] = 0;
         }
       }
     }
+    if (allFlashed)
+      break;
   }
 
-  cout << flashes << endl;
+  cout << step << endl;
   return 0;
 }
